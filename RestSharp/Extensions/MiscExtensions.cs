@@ -89,14 +89,22 @@ namespace RestSharp.Extensions
         public static string AsString(this byte[] buffer, string encoding)
         {
             Encoding enc;
-            try
+            if (encoding != null)
             {
-                enc = Encoding.GetEncoding(encoding);
+                try
+                {
+                    enc = Encoding.GetEncoding(encoding);
+                }
+                catch (Exception)
+                {
+                    enc = Encoding.UTF8;
+                }
             }
-            catch (Exception)
+            else
             {
                 enc = Encoding.UTF8;
             }
+            
 
             return AsString(buffer, enc);
         }
